@@ -1,7 +1,8 @@
-def rreplace(str, old_str_part, new_str_part, occurrence):
-    splitted_str = str.rsplit(old_str_part, occurrence)
-    return new_str_part.join(splitted_str)
+def rreplace(string, old_str_part, new_str_part, occurrence):
+    split_str = string.rsplit(old_str_part, occurrence)
+    return new_str_part.join(split_str)
 
-def rremove(str, str_part, occurrence):
-    splitted_str = str.rsplit(str_part, occurrence)
-    return splitted_str[0]
+
+def rremove(string, str_part, occurrence):
+    split_str = string.rsplit(str_part, occurrence)
+    return split_str[0]

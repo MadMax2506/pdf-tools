@@ -1,11 +1,13 @@
 import os
 from PyPDF2 import PdfFileReader, PdfFileWriter
-from utils import StringUtils, PageNumberNotExists
+
+from utils import StringUtils, PageNumberNotExists, OsTools
 
 
 class PdfFile:
     def __init__(self, path):
         self.__path = path
+        self.__separator = OsTools.separator(path)
 
     def get_page_numbers(self):
         file_input = open(self.__path, 'rb')
@@ -72,11 +74,11 @@ class PdfFile:
         pdf_writer.addPage(pdf_reader.getPage(page_number))
 
         if sub_output_dir:
-            dir = StringUtils.rremove(self.__path, "\\", 1) + "\\" + sub_output_dir
+            dir = f"{StringUtils.rremove(self.__path, self.__separator, 1)}{self.__separator}{sub_output_dir}"
             if not os.path.exists(dir):
                 os.makedirs(dir)
 
-            modified_path = StringUtils.rreplace(self.__path, "\\", f"\\{sub_output_dir}\\", 1)
+            modified_path = StringUtils.rreplace(self.__path, self.__separator, f"{self.__separator}{sub_output_dir}{self.__separator}", 1)
         else:
             modified_path = self.__path
         file_output_str = StringUtils.rreplace(modified_path, ".", f"-page-{page_number + 1}.", 1)
